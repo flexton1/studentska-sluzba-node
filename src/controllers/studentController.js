@@ -21,12 +21,13 @@ export const createStudent = async (req, res) => {
                 is_active: true
             })
                 .then(() => {
-                    res.headers.append({'Access-Control-Allow-Credentials': true});
-                    res.json("Student created");
+
+                    res.json("Student created!");
                 })
                 .catch((err) => {
                     if (err) {
                         res.status(400).json({error: err});
+                        console.log(err)
                     }
                 });
     }

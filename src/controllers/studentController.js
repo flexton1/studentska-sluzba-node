@@ -1,0 +1,52 @@
+import mongoose from "mongoose";
+import { StudentSchema } from "../models/studentModel";
+import bcrypt from "bcrypt";
+
+const Student = mongoose.model('Student', StudentSchema);
+
+//create student
+export const createStudent = async (req, res) => {
+    try {
+
+        const student = req.body;
+           await Student.create({
+                email: student.email,
+                firstName: student.firstName,
+                lastName: student.lastName,
+                indexNumber: student.indexNumber,
+               year: student.year,
+               userId: req.payload.id,
+               studentStatus: student.studentStatus,
+               phone: student.phone,
+                is_active: true
+            })
+                .then(() => {
+                    res.headers.append({'Access-Control-Allow-Credentials': true});
+                    res.json("Student created");
+                })
+                .catch((err) => {
+                    if (err) {
+                        res.status(400).json({error: err});
+                    }
+                });
+    }
+    catch (error){
+        throw new Error("Error creating student!");
+    }
+}
+
+
+export const getAllStudents = async (req, res) => {
+    try{
+        const userID = req.payload.id;
+        await Student.find({userId: userID, is_active: true}).then((users) => {
+            res.json(users)
+        })
+    }
+    catch (error){
+        throw new Error("Cannot get students");
+    }
+}
+
+
+

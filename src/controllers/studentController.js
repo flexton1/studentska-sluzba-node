@@ -49,5 +49,32 @@ export const getAllStudents = async (req, res) => {
     }
 }
 
+export const deleteStudent = async (req, res) => {
+    try{
+        const {id} = req.body;
+
+
+        const student = await Student.findOne({where: {_id : id}});
+        if(!student){
+            throw new Error("Student not found");
+        };
+
+        student.is_active = false;
+        await student.save().then(() => {
+
+            res.json({message: 'Student deleted!',
+            });
+        });
+
+
+
+
+
+    }catch (error){
+        throw new Error("Cannot delete student");
+    }
+}
+
+
 
 

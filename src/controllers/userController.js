@@ -46,7 +46,7 @@ export const login = async (req, res) => {
               if (!match) {
                   res
                       .status(400)
-                      .json({error: "Wrong Username and Password Combination!"});
+                      .json({error: "Wrong Email and Password Combination!"});
               } else {
                   const accessToken = createTokens(userLogin);
 

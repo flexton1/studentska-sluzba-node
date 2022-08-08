@@ -33,9 +33,13 @@ export const register = (req, res) => {
 
 //LOGIN
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
+    if(!email || !password){
+        throw new Error("Invalid data");
+    }
       
-        const userLogin = await User.findOne({ where: { email: email } });
+        const userLogin = await User.findOne( { email: email, is_active : true } );
 
 
       

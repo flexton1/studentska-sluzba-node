@@ -40,7 +40,8 @@ export const createStudent = async (req, res) => {
 export const getAllStudents = async (req, res) => {
     try{
         const userID = req.payload.id;
-        await Student.find({userId: userID, is_active: true}).then((users) => {
+
+        await Student.find({userId : userID, is_active: true}).then((users) => {
             res.json(users)
         })
     }

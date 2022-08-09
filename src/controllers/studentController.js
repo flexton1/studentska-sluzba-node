@@ -8,7 +8,14 @@ const Student = mongoose.model('Student', StudentSchema);
 export const createStudent = async (req, res) => {
     try {
 
+
+
         const student = req.body;
+
+        if(student.studentStatus !== 1 || student.studentStatus !== 2){
+            student.studentStatus = 0;
+        }
+
            await Student.create({
                 email: student.email,
                 firstName: student.firstName,

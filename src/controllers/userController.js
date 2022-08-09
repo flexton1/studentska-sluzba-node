@@ -9,12 +9,22 @@ const User = mongoose.model('User', UserSchema);
 export const register = (req, res) => {
     try {
 
-        const {email, password} = req.body;
+        const {email, password, firstName, lastName, company, phone} = req.body;
+        if(!email || email === '' || !password || password === ''){
+            throw new Error("Invalid data");
+        };
+
+
         bcrypt.hash(password, 10).then((hash) => {
             User.create({
                 email: email,
                 password: hash,
-                is_active: true
+                is_active: true,
+                firstName: firstName,
+                lastName: lastName,
+                company: company,
+                phone: phone,
+                confirmed_email: true
             })
                 .then(() => {
                     res.json("USER REGISTERED");
@@ -88,5 +98,8 @@ export const checkToken = async (req, res) => {
     }
 
 }
+
+
+
 
 

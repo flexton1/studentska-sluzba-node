@@ -74,4 +74,19 @@ export const login = async (req, res) => {
     }
 }
 
+//CHECK TOKEN
+export const checkToken = async (req, res) => {
+
+    try
+    {
+        res.json("Token valid!");
+
+
+    }
+    catch (e){
+        throw new Error("Token invalid");
+    }
+
+}
+
 

@@ -35,7 +35,7 @@ const routes = (app) => {
         .post(validateToken, createStudent);
 
     app.route('/get-all-students')
-        .get(validateToken, getAllStudents);
+        .post(validateToken, getAllStudents);
       
       app.route('/delete-student')
           .post(validateToken, deleteStudent);

@@ -48,9 +48,27 @@ export const getAllStudents = async (req, res) => {
     try{
         const userID = req.payload.id;
 
-        await Student.find({userId : userID, is_active: true}).then((users) => {
-            res.json(users)
-        })
+
+
+
+        const pageOptions = {
+            page: parseInt(req.body.query.page, 10) || 0,
+            limit: parseInt(req.body.query.limit, 10) || 10
+        }
+
+        let totalRecords = await Student.countDocuments({is_active: true, userId: userID});
+
+
+        await Student.find({userId : userID, is_active: true}).skip(pageOptions.page * pageOptions.limit)
+            .limit(pageOptions.limit)
+            .exec(function (err, doc) {
+                if(err) { res.status(500).json(err); return; };
+                let response = {}
+                response.data = doc;
+                response.totalRecords = totalRecords;
+                res.status(200).json(response);
+
+            });
     }
     catch (error){
         throw new Error("Cannot get students");

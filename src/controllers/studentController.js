@@ -58,10 +58,18 @@ export const getAllStudents = async (req, res) => {
 
         let totalRecords = await Student.countDocuments({is_active: true, userId: userID});
 
+        let queryOptions =
+        {
+            userId : userID,
+            is_active: true
+        }
 
-        await Student.find({userId : userID, is_active: true}).skip(pageOptions.page * pageOptions.limit)
+
+
+        await Student.find({userId : userID, is_active: true})
+            .skip(pageOptions.page * pageOptions.limit)
             .limit(pageOptions.limit)
-            .sort("firstName")
+            .sort("-firstName")
             .exec(function (err, doc) {
                 if(err) { res.status(500).json(err); return; };
                 let response = {}

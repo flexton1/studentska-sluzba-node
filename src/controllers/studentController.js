@@ -12,7 +12,7 @@ export const createStudent = async (req, res) => {
 
         const student = req.body;
 
-        if(student.studentStatus !== 1 || student.studentStatus !== 2){
+        if(student.studentStatus !== StatusStudentaEnum.Redovan || student.studentStatus !== StatusStudentaEnum.Vanredan){
             student.studentStatus = 0;
         }
 
@@ -66,7 +66,7 @@ export const getAllStudents = async (req, res) => {
 
 
 
-        await Student.find({userId : userID, is_active: true})
+        await Student.find(queryOptions)
             .skip(pageOptions.page * pageOptions.limit)
             .limit(pageOptions.limit)
             .sort("-firstName")
@@ -89,7 +89,7 @@ export const deleteStudent = async (req, res) => {
         const {id} = req.body;
 
 
-        const student = await Student.findOne({where: {_id : id}});
+        const student = await Student.findOne({_id : id});
         if(!student){
             throw new Error("Student not found");
         };
@@ -107,6 +107,33 @@ export const deleteStudent = async (req, res) => {
 
     }catch (error){
         throw new Error("Cannot delete student");
+    }
+}
+
+
+export const updateStudent = async (req, res) => {
+    try{
+        const userID = req.payload.id;
+        const updatedStudent = req.body;
+
+
+       const student = await Student.findOne({_id: updatedStudent._id, is_active: true, userId: userID});
+       if(!student){
+           throw new Error("Cannot find student");
+       }
+       student.firstName = updatedStudent.firstName;
+       student.lastName = updatedStudent.lastName;
+       student.studentStatus = updatedStudent.studentStatus;
+       student.year = updatedStudent.year;
+       student.phone = updatedStudent.phone;
+       student.email = updatedStudent.email;
+
+       await student.save().then(() => res.status(200).json("Student updated!"));
+
+
+    }
+    catch (e){
+        throw new Error("Cannot update student!");
     }
 }
 

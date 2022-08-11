@@ -1,7 +1,7 @@
 
 import {checkToken, login, register} from "../controllers/userController";
 import {validateToken} from "../../JWT";
-import {createStudent, deleteStudent, getAllStudents} from "../controllers/studentController";
+import {createStudent, deleteStudent, getAllStudents, updateStudent} from "../controllers/studentController";
 
 
 const routes = (app) => {
@@ -39,6 +39,9 @@ const routes = (app) => {
       
       app.route('/delete-student')
           .post(validateToken, deleteStudent);
+
+      app.route('/update-student')
+          .post(validateToken, updateStudent);
       
 
 

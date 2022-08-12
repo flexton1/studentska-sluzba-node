@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT | 4000;
 
 //mongoose connection
 mongoose.Promise = global.Promise;

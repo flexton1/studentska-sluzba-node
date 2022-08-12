@@ -33,7 +33,9 @@ export const StudentSchema = new Schema({
     },
     studentStatus: {
         type: Number,
-        allowNull: true
+        allowNull: true,
+        min: [0],
+        max: [2]
     },
     phone: {
         type: Number,

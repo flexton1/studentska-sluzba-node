@@ -64,7 +64,7 @@ export const getAllStudents = async (req, res) => {
             is_active: true
         }
 
-
+       /* where('likes').in(['vaporizing', 'talking']).*/
 
         await Student.find(queryOptions)
             .skip(pageOptions.page * pageOptions.limit)

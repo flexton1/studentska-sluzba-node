@@ -1,9 +1,10 @@
 import { sign, verify } from "jsonwebtoken";
 
+
 export const createTokens = (user) => {
   const accessToken = sign(
     { id: user.id },
-    "jwtsecretplschange"
+      process.env.SECRET
   );
 
   return accessToken;
@@ -16,7 +17,7 @@ export const validateToken = (req, res, next) => {
     return res.status(400).json({ error: "User not Authenticated!" });
 
   try {
-    const validToken = verify(accessToken, "jwtsecretplschange");
+    const validToken = verify(accessToken, process.env.SECRET);
     if (validToken) {
       req.authenticated = true;
       req.payload = validToken;

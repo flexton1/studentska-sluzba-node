@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import * as dotenv from 'dotenv';
 
 import routes from './src/routes/studentServiceRoutes';
 import cookieParser from 'cookie-parser';
@@ -9,7 +10,9 @@ import cookieParser from 'cookie-parser';
 
 
 const app = express();
+dotenv.config();
 const PORT = process.env.PORT | 4000;
+
 
 //mongoose connection
 mongoose.Promise = global.Promise;

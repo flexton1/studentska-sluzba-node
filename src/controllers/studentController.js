@@ -12,9 +12,9 @@ export const createStudent = async (req, res) => {
 
         const student = req.body;
 
-        if(student.studentStatus !== StatusStudentaEnum.Redovan || student.studentStatus !== StatusStudentaEnum.Vanredan){
+        /*if(student.studentStatus !== StatusStudentaEnum.Redovan || student.studentStatus !== StatusStudentaEnum.Vanredan){
             student.studentStatus = 0;
-        }
+        }*/
 
            await Student.create({
                 email: student.email,
@@ -57,20 +57,26 @@ export const getAllStudents = async (req, res) => {
         }
 
         let totalRecords = await Student.countDocuments({is_active: true, userId: userID});
+        let filter_string = req.body.query.filter_string.toLowerCase();
+        const userRegex = new RegExp(filter_string, 'i')
+
 
         let queryOptions =
         {
             userId : userID,
-            is_active: true
+            is_active: true,
+            $or: [{firstName: userRegex}, {lastName:userRegex}, {email: userRegex},
+                {indexNumber: userRegex}]
         }
 
-        let filter_string = req.body.query.filter_string;
+
 
 
        /* where('likes').in(['vaporizing', 'talking']).*/
 
         await Student.find(queryOptions)
             .skip(pageOptions.page * pageOptions.limit)
+
             .limit(pageOptions.limit)
             .sort("-firstName")
             .exec(function (err, doc) {

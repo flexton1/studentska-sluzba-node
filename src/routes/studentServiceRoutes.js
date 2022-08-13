@@ -1,5 +1,5 @@
 
-import {checkToken, login, register} from "../controllers/userController";
+import {checkToken, login, logout, register} from "../controllers/userController";
 import {validateToken} from "../../JWT";
 import {createStudent, deleteStudent, getAllStudents, updateStudent} from "../controllers/studentController";
 
@@ -15,6 +15,9 @@ const routes = (app) => {
 
     app.route('/login')
         .post(login);
+
+    app.route('/logout')
+        .post(validateToken, logout)
 
     app.route('/create-student')
         .post(validateToken, createStudent);

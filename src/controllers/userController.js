@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { UserSchema } from "../models/userModel";
 import bcrypt from "bcrypt";
-import {createTokens, validateTokens} from "./../../JWT"
+import {createTokens} from "../../JWT"
 
 const User = mongoose.model('User', UserSchema);
 
@@ -12,7 +12,7 @@ export const register = (req, res) => {
         const {email, password, firstName, lastName, company, phone} = req.body;
         if(!email || email === '' || !password || password === ''){
             throw new Error("Invalid data");
-        };
+        }
 
 
         bcrypt.hash(password, 10).then((hash) => {
@@ -98,6 +98,18 @@ export const checkToken = async (req, res) => {
     }
 
 }
+
+//LOGOUT
+export const logout = async (req, res) => {
+    // Set token to none and expire after 5 seconds
+    res.cookie('access_token', 'none', {
+        expires: new Date(Date.now() + 5 * 1000),
+        httpOnly: true,
+    })
+    res
+        .status(200)
+        .json({ success: true, message: 'User logged out successfully' })
+};
 
 
 

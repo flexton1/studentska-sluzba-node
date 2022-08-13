@@ -17,7 +17,7 @@ const routes = (app) => {
         .post(login);
 
     app.route('/logout')
-        .post(validateToken, logout)
+        .get(validateToken, logout)
 
     app.route('/create-student')
         .post(validateToken, createStudent);

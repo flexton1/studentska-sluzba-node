@@ -102,7 +102,7 @@ export const checkToken = async (req, res) => {
 //LOGOUT
 export const logout = async (req, res) => {
     // Set token to none and expire after 5 seconds
-    res.cookie('access_token', 'none', {
+    res.cookie('access-token', 'none', {
         expires: new Date(Date.now() + 5 * 1000),
         httpOnly: true,
     })

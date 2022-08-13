@@ -64,6 +64,9 @@ export const getAllStudents = async (req, res) => {
             is_active: true
         }
 
+        let filter_string = req.body.query.filter_string;
+
+
        /* where('likes').in(['vaporizing', 'talking']).*/
 
         await Student.find(queryOptions)

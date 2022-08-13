@@ -5,22 +5,7 @@ import {createStudent, deleteStudent, getAllStudents, updateStudent} from "../co
 
 
 const routes = (app) => {
-    
-    // app.route('/contact')
-    //     .get((req, res, next) => { 
-    //     // middleware
-    //     console.log('Request from: ' + req.originalUrl)
-    //     console.log('Request type: ' + req.method)
-    //     next();  
-    //     }, getAllContacts)
-    // .post(addNewContact);
 
-
-
-    // app.route('/contact/:contactID')
-    //     .get(getContact)
-    //     .put(updateContact)
-    //     .delete(removeContact)
 
     app.route('/check-token')
         .get(validateToken, checkToken)

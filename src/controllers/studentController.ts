@@ -57,6 +57,11 @@ export const getAllStudents = async (req, res) => {
             limit: parseInt(req.body.query.limit, 10) || 10
         }
 
+        const sort_model = {
+            sort_column: req.body.query.sort_column,
+            sort_order: req.body.query.sort_order
+        };
+
         let totalRecords: number = await Student.countDocuments({is_active: true, userId: userID});
         let filter_string: string = req.body.query.filter_string.toLowerCase();
         const userRegex: RegExp = new RegExp(filter_string, 'i')
@@ -79,7 +84,7 @@ export const getAllStudents = async (req, res) => {
             .skip(pageOptions.page * pageOptions.limit)
 
             .limit(pageOptions.limit)
-            .sort("-firstName")
+            .sort(sort_model.sort_column)
             .exec(function (err, doc) {
                 if(err) { res.status(500).json(err); return; }
                 let response: any= {};

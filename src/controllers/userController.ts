@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
-// @ts-ignore
-import { UserSchema } from "../models/userModel.ts";
+import { UserSchema } from "../models/userModel";
 import {createTokens} from "../../JWT"
-// @ts-ignore
 import bcrypt from "bcrypt";
 
 const User = mongoose.model('User', UserSchema);
@@ -17,7 +15,7 @@ export const register = (req, res) => {
         }
 
 
-        bcrypt.hash(password, 10).then((hash) => {
+        bcrypt.hash(password, 10).then((hash: string): void => {
             User.create({
                 email: email,
                 password: hash,
@@ -28,25 +26,25 @@ export const register = (req, res) => {
                 phone: phone,
                 confirmed_email: true
             })
-                .then(() => {
+                .then((): void => {
                     res.json("USER REGISTERED");
                 })
-                .catch((err) => {
+                .catch((err: string): void => {
                     if (err) {
                         res.status(400).json({error: err});
                     }
                 });
         });
     }
-    catch (error){
+    catch (error: any){
         throw new Error("Error registering!");
     }
 }
 
 //LOGIN
 export const login = async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+    const email: string = req.body.email;
+    const password: string = req.body.password;
     if(!email || !password){
         throw new Error("Invalid data");
     }
@@ -57,21 +55,21 @@ export const login = async (req, res) => {
       
         if (!userLogin) res.status(400).json({ error: "User Doesn't Exist" });
       try {
-          const dbPassword = userLogin.password;
+          const dbPassword: string = userLogin.password;
           bcrypt.compare(password, dbPassword).then(async (match) => {
               if (!match) {
                   res
                       .status(400)
                       .json({error: "Wrong Email and Password Combination!"});
               } else {
-                  const accessToken = createTokens(userLogin);
+                  const accessToken: string = createTokens(userLogin);
 
                   res.cookie("access-token", accessToken, {
                       maxAge: 60 * 60 * 24 * 30 * 1000,
                       httpOnly: true,
                   });
 
-                  // @ts-ignore
+
                   userLogin.last_login_timestamp = Date.now();
                   await userLogin.save();
 

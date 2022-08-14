@@ -1,9 +1,7 @@
 
-// @ts-ignore
-import {checkToken, login, logout, register} from "../controllers/userController.ts";
+import {checkToken, login, logout, register} from "../controllers/userController";
 import {validateToken} from "../../JWT";
-// @ts-ignore
-import {createStudent, deleteStudent, getAllStudents, updateStudent} from "../controllers/studentController.ts";
+import {createStudent, deleteStudent, getAllStudents, updateStudent} from "../controllers/studentController";
 
 
 const routes = (app) => {

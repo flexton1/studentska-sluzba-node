@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-// @ts-ignore
-import { StudentSchema } from "../models/studentModel.ts";
+import { StudentSchema } from "../models/studentModel";
+import {Student} from "../models/Student";
+import {QueryOptions} from "../models/QueryOptions"
 
 const Student = mongoose.model('Student', StudentSchema);
 
@@ -10,7 +11,7 @@ export const createStudent = async (req, res) => {
 
 
 
-        const student = req.body;
+        const student: Student = req.body;
 
         /*if(student.studentStatus !== StatusStudentaEnum.Redovan || student.studentStatus !== StatusStudentaEnum.Vanredan){
             student.studentStatus = 0;
@@ -27,18 +28,18 @@ export const createStudent = async (req, res) => {
                phone: student.phone,
                 is_active: true
             })
-                .then(() => {
+                .then((): void => {
 
                     res.json("Student created!");
                 })
-                .catch((err) => {
-                    if (err) {
+                .catch((err: string) => {
+                    if (err){
                         res.status(400).json({error: err});
                         console.log(err)
                     }
                 });
     }
-    catch (error){
+    catch (error: any){
         throw new Error("Error creating student!");
     }
 }
@@ -46,7 +47,7 @@ export const createStudent = async (req, res) => {
 
 export const getAllStudents = async (req, res) => {
     try{
-        const userID = req.payload.id;
+        const userID: string = req.payload.id;
 
 
 
@@ -56,12 +57,12 @@ export const getAllStudents = async (req, res) => {
             limit: parseInt(req.body.query.limit, 10) || 10
         }
 
-        let totalRecords = await Student.countDocuments({is_active: true, userId: userID});
-        let filter_string = req.body.query.filter_string.toLowerCase();
-        const userRegex = new RegExp(filter_string, 'i')
+        let totalRecords: number = await Student.countDocuments({is_active: true, userId: userID});
+        let filter_string: string = req.body.query.filter_string.toLowerCase();
+        const userRegex: RegExp = new RegExp(filter_string, 'i')
 
 
-        let queryOptions =
+        let queryOptions: QueryOptions =
         {
             userId : userID,
             is_active: true,
@@ -88,7 +89,7 @@ export const getAllStudents = async (req, res) => {
 
             });
     }
-    catch (error){
+    catch (error: any){
         throw new Error("Cannot get students");
     }
 }
@@ -104,7 +105,7 @@ export const deleteStudent = async (req, res) => {
         }
 
         student.is_active = false;
-        await student.save().then(() => {
+        await student.save().then((): void => {
 
             res.json({message: 'Student deleted!',
             });
@@ -114,7 +115,7 @@ export const deleteStudent = async (req, res) => {
 
 
 
-    }catch (error){
+    }catch (error: any){
         throw new Error("Cannot delete student");
     }
 }
@@ -122,8 +123,8 @@ export const deleteStudent = async (req, res) => {
 
 export const updateStudent = async (req, res) => {
     try{
-        const userID = req.payload.id;
-        const updatedStudent = req.body;
+        const userID: string = req.payload.id;
+        const updatedStudent: Student = req.body;
 
 
        const student: any = await Student.findOne({_id: updatedStudent._id, is_active: true, userId: userID});
@@ -137,11 +138,11 @@ export const updateStudent = async (req, res) => {
        student.phone = updatedStudent.phone;
        student.email = updatedStudent.email;
 
-       await student.save().then(() => res.status(200).json("Student updated!"));
+       await student.save().then((): void => res.status(200).json("Student updated!"));
 
 
     }
-    catch (e){
+    catch (e: any){
         throw new Error("Cannot update student!");
     }
 }

@@ -5,8 +5,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 
 import cookieParser from 'cookie-parser';
-// @ts-ignore
-import routes from "./src/routes/studentServiceRoutes.ts";
+import routes from "./src/routes/studentServiceRoutes";
 
 
 

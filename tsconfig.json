@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "strict": false,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": false,
+    "baseUrl": "./src",
+    "rootDir": "./",
+    "paths": {
+      "express": ["../node_modules/express/lib/express"], // This mapping is relative to "baseUrl",
+    },
+  }
+}

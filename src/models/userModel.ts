@@ -4,7 +4,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 
+
+
 export const UserSchema = new Schema({
+    // @ts-ignore
     email: {
         type: String,
         required: 'Email is required',

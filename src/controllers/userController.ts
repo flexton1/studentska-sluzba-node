@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
-import { UserSchema } from "../models/userModel";
-import bcrypt from "bcrypt";
+// @ts-ignore
+import { UserSchema } from "../models/userModel.ts";
 import {createTokens} from "../../JWT"
+// @ts-ignore
+import bcrypt from "bcrypt";
 
 const User = mongoose.model('User', UserSchema);
 
@@ -49,7 +51,7 @@ export const login = async (req, res) => {
         throw new Error("Invalid data");
     }
       
-        const userLogin = await User.findOne( { email: email, is_active : true } );
+        const userLogin: any = await User.findOne( { email: email, is_active : true } );
 
 
       
@@ -69,6 +71,7 @@ export const login = async (req, res) => {
                       httpOnly: true,
                   });
 
+                  // @ts-ignore
                   userLogin.last_login_timestamp = Date.now();
                   await userLogin.save();
 

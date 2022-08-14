@@ -18,6 +18,7 @@ export const StudentSchema = new Schema({
         type: String,
         required: 'Last name is required'
     },
+    // @ts-ignore
     indexNumber: {
         type: String,
         required: 'Index number is required',

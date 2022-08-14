@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { StudentSchema } from "../models/studentModel";
-import bcrypt from "bcrypt";
+// @ts-ignore
+import { StudentSchema } from "../models/studentModel.ts";
 
 const Student = mongoose.model('Student', StudentSchema);
 
@@ -80,8 +80,8 @@ export const getAllStudents = async (req, res) => {
             .limit(pageOptions.limit)
             .sort("-firstName")
             .exec(function (err, doc) {
-                if(err) { res.status(500).json(err); return; };
-                let response = {}
+                if(err) { res.status(500).json(err); return; }
+                let response: any= {};
                 response.data = doc;
                 response.totalRecords = totalRecords;
                 res.status(200).json(response);
@@ -98,10 +98,10 @@ export const deleteStudent = async (req, res) => {
         const {id} = req.body;
 
 
-        const student = await Student.findOne({_id : id});
+        const student: any = await Student.findOne({_id : id});
         if(!student){
             throw new Error("Student not found");
-        };
+        }
 
         student.is_active = false;
         await student.save().then(() => {
@@ -126,7 +126,7 @@ export const updateStudent = async (req, res) => {
         const updatedStudent = req.body;
 
 
-       const student = await Student.findOne({_id: updatedStudent._id, is_active: true, userId: userID});
+       const student: any = await Student.findOne({_id: updatedStudent._id, is_active: true, userId: userID});
        if(!student){
            throw new Error("Cannot find student");
        }

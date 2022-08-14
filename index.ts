@@ -4,25 +4,30 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 
-import routes from './src/routes/studentServiceRoutes';
 import cookieParser from 'cookie-parser';
+// @ts-ignore
+import routes from "./src/routes/studentServiceRoutes.ts";
 
 
 
 const app = express();
 dotenv.config();
+// @ts-ignore
 const PORT = process.env.PORT | 4000;
 
 
 //mongoose connection
 mongoose.Promise = global.Promise;
 // noinspection JSVoidFunctionReturnValueUsed
+
+
+// @ts-ignore
 mongoose.connect('mongodb://localhost/studentska-sluzba',
 {
     maxPoolSize:50,
     wtimeoutMS:2500,
     useNewUrlParser:true
-}).then(console.log('connecting'))
+}).then(() => console.log('connecting'))
 .catch(err => console.log(`error: ${err}`))
 
 // bodyparser setup

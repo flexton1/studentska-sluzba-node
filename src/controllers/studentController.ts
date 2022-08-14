@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { SortOrder } from "mongoose";
 import { StudentSchema } from "../models/studentModel";
 import {Student} from "../models/Student";
 import {QueryOptions} from "../models/QueryOptions"
@@ -51,16 +51,17 @@ export const getAllStudents = async (req, res) => {
 
 
 
-
+        //PAGING
         const pageOptions = {
             page: parseInt(req.body.query.page, 10) || 0,
             limit: parseInt(req.body.query.limit, 10) || 10
         }
 
-        const sort_model = {
-            sort_column: req.body.query.sort_column,
-            sort_order: req.body.query.sort_order
-        };
+
+        //SORTING
+          let sort_column: string = req.body.query.sort_column;
+          let sort_order: string = req.body.query.sort_order === 1 ? '' : '-';
+          let sort = sort_order + sort_column;
 
         let totalRecords: number = await Student.countDocuments({is_active: true, userId: userID});
         let filter_string: string = req.body.query.filter_string.toLowerCase();
@@ -72,7 +73,8 @@ export const getAllStudents = async (req, res) => {
             userId : userID,
             is_active: true,
             $or: [{firstName: userRegex}, {lastName:userRegex}, {email: userRegex},
-                {indexNumber: userRegex}]
+                {indexNumber: userRegex}],
+
         }
 
 
@@ -81,10 +83,9 @@ export const getAllStudents = async (req, res) => {
        /* where('likes').in(['vaporizing', 'talking']).*/
 
         await Student.find(queryOptions)
+            .sort(sort)
             .skip(pageOptions.page * pageOptions.limit)
-
             .limit(pageOptions.limit)
-            .sort(sort_model.sort_column)
             .exec(function (err, doc) {
                 if(err) { res.status(500).json(err); return; }
                 let response: any= {};

@@ -2,13 +2,14 @@
 import {checkToken, login, logout, register} from "../controllers/userController";
 import {validateToken} from "../../JWT";
 import {createStudent, deleteStudent, getAllStudents, updateStudent} from "../controllers/studentController";
+import {Application} from "express";
 
 
-const routes = (app) => {
+const routes = (app: Application): any => {
 
 
     app.route('/check-token')
-        .get(validateToken, checkToken)
+        .get(validateToken, checkToken);
 
     app.route('/register')
         .post(register);
@@ -17,7 +18,7 @@ const routes = (app) => {
         .post(login);
 
     app.route('/logout')
-        .get(validateToken, logout)
+        .get(validateToken, logout);
 
     app.route('/create-student')
         .post(validateToken, createStudent);

@@ -49,14 +49,11 @@ export const getAllStudents = async (req, res) => {
     try{
         const userID: string = req.payload.id;
 
-
-
         //PAGING
         const pageOptions = {
             page: parseInt(req.body.query.page, 10) || 0,
             limit: parseInt(req.body.query.limit, 10) || 10
         }
-
 
         //SORTING
           let sort_column: string = req.body.query.sort_column;
@@ -76,8 +73,6 @@ export const getAllStudents = async (req, res) => {
                 {indexNumber: userRegex}],
 
         }
-
-
 
 
        /* where('likes').in(['vaporizing', 'talking']).*/
@@ -139,10 +134,11 @@ export const updateStudent = async (req, res) => {
        }
        student.firstName = updatedStudent.firstName;
        student.lastName = updatedStudent.lastName;
-       student.studentStatus = updatedStudent.studentStatus;
+       student.studentStatus = parseInt(updatedStudent.studentStatus);
        student.year = updatedStudent.year;
        student.phone = updatedStudent.phone;
        student.email = updatedStudent.email;
+       student.indexNumber = parseInt(updatedStudent.indexNumber);
 
        await student.save().then((): void => res.status(200).json("Student updated!"));
 

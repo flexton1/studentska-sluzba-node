@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Response} from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -18,23 +18,25 @@ const PORT = process.env.PORT | 4000;
 //mongoose connection
 mongoose.Promise = global.Promise;
 // noinspection JSVoidFunctionReturnValueUsed
-
-
 // @ts-ignore
-mongoose.connect('mongodb://localhost/studentska-sluzba',
+mongoose.connect(process.env.MONGODB_URI,
 {
     maxPoolSize:50,
-    wtimeoutMS:2500,
+    waitQueueTimeoutMS:2500,
     useNewUrlParser:true
-}).then(() => console.log('connecting'))
-.catch(err => console.log(`error: ${err}`))
+}).then((): void => console.log('connecting'))
+.catch(err => console.log(`error: ${err}`));
+
+mongoose.connection.on('error', err => {
+    console.log(err);
+});
 
 // bodyparser setup
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 //CORS
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.CORS_ORIGIN,
     optionsSuccessStatus: 200,
     credentials: true
 };
@@ -54,13 +56,13 @@ routes(app);
 app.use(express.static('public'));
 
 
-app.get("/", (req, res) => 
+app.get("/", (req, res): Response=>
 
     res.send(`Node and express server running on port ${PORT}`)
 
 );
 
 
-app.listen(PORT, () => 
+app.listen(PORT, (): void =>
     console.log(`Your server is running on port ${PORT}`)
 );

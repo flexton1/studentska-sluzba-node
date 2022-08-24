@@ -9,8 +9,6 @@ const Student = mongoose.model('Student', StudentSchema);
 export const createStudent = async (req, res) => {
     try {
 
-
-
         const student: Student = req.body;
 
         /*if(student.studentStatus !== StatusStudentaEnum.Redovan || student.studentStatus !== StatusStudentaEnum.Vanredan){

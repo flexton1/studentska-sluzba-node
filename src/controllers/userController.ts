@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 const User = mongoose.model('User', UserSchema);
 
 //REGISTER
-export const register = (req, res) => {
+export const register = async (req, res) => {
     try {
 
         const {email, password, firstName, lastName, company, phone} = req.body;
@@ -15,7 +15,7 @@ export const register = (req, res) => {
         }
 
 
-        bcrypt.hash(password, 10).then((hash: string): void => {
+       await bcrypt.hash(password, 10).then((hash: string): void => {
             User.create({
                 email: email,
                 password: hash,

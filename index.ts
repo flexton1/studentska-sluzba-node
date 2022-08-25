@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
+import mongoSanitize from 'express-mongo-sanitize';
 
 import cookieParser from 'cookie-parser';
 import routes from "./src/routes/studentServiceRoutes";
@@ -15,21 +16,7 @@ dotenv.config();
 const PORT = process.env.PORT | 4000;
 
 
-//mongoose connection
-mongoose.Promise = global.Promise;
-// noinspection JSVoidFunctionReturnValueUsed
-// @ts-ignore
-mongoose.connect(process.env.MONGODB_URI,
-{
-    maxPoolSize:50,
-    waitQueueTimeoutMS:2500,
-    useNewUrlParser:true
-}).then((): void => console.log('connecting'))
-.catch(err => console.log(`error: ${err}`));
 
-mongoose.connection.on('error', err => {
-    console.log(err);
-});
 
 // bodyparser setup
 app.use(bodyParser.urlencoded({extended: true}));
@@ -41,6 +28,8 @@ const corsOptions = {
     credentials: true
 };
 app.use(cors(corsOptions));
+
+app.use(mongoSanitize());
 //COOKIE PARSER
 app.use(cookieParser());
 
@@ -61,6 +50,22 @@ app.get("/", (req, res): Response=>
     res.send(`Node and express server running on port ${PORT}`)
 
 );
+
+//mongoose connection
+mongoose.Promise = global.Promise;
+// noinspection JSVoidFunctionReturnValueUsed
+// @ts-ignore
+mongoose.connect(process.env.MONGODB_URI,
+    {
+        maxPoolSize:50,
+        waitQueueTimeoutMS:2500,
+        useNewUrlParser:true
+    }).then((): void => console.log('connecting'))
+    .catch(err => console.log(`error: ${err}`));
+
+mongoose.connection.on('error', err => {
+    console.log(err);
+});
 
 
 app.listen(PORT, (): void =>

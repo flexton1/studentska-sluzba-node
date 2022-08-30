@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import mongoSanitize from 'express-mongo-sanitize';
 import cookieParser from 'cookie-parser';
 import routes from "./src/routes/studentServiceRoutes";
+import helmet from 'helmet';
 
 
 
@@ -32,6 +33,9 @@ app.use(mongoSanitize());
 //COOKIE PARSER
 app.use(cookieParser());
 
+app.use(helmet());
+app.disable('x-powered-by');
+
 
 //json webtokens
 // app.use(Jwt);
@@ -53,13 +57,9 @@ app.get("/", (req, res): Response=>
 //mongoose connection
 mongoose.Promise = global.Promise;
 // noinspection JSVoidFunctionReturnValueUsed
-// @ts-ignore
-mongoose.connect(process.env.MONGODB_URI,
-    {
-        maxPoolSize:50,
-        waitQueueTimeoutMS:2500,
-        useNewUrlParser:true
-    }).then((): void => console.log('connecting'))
+
+mongoose.connect(process.env.MONGODB_URI
+    ).then((): void => console.log('connecting'))
     .catch(err => console.log(`error: ${err}`));
 
 mongoose.connection.on('error', err => {

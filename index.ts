@@ -7,7 +7,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import cookieParser from 'cookie-parser';
 import routes from "./src/routes/studentServiceRoutes";
 import helmet from 'helmet';
-
+import path from 'path';
 
 
 const app = express();
@@ -40,6 +40,8 @@ app.disable('x-powered-by');
 //json webtokens
 // app.use(Jwt);
 
+//SERVING THE FRONTEND
+app.use(express.static(path.join(__dirname + '/public')));
 
 
 routes(app);
@@ -56,8 +58,6 @@ app.get("/", (req, res): Response=>
 
 //mongoose connection
 mongoose.Promise = global.Promise;
-// noinspection JSVoidFunctionReturnValueUsed
-
 mongoose.connect(process.env.MONGODB_URI
     ).then((): void => console.log('connecting'))
     .catch(err => console.log(`error: ${err}`));

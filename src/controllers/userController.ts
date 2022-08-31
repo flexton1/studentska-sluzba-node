@@ -91,10 +91,9 @@ export const checkToken = async (req, res) => {
     try
     {
         res.json("Token valid!");
-
-
     }
-    catch (e){
+    catch (e)
+    {
         throw new Error("Token invalid");
     }
 

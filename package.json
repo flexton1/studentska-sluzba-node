@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.ts",
     "typescript": "nodemon index.ts --exec babel-node -e -ts",
-    "heroku-postbuild": "cd public/studentska-sluzba-react && npm install && npm run build --target=production"
+    "heroku-postbuild": "cd public/studentska-sluzba-react && npm install && npm run build"
   },
   "author": "Harun J",
   "license": "ISC",

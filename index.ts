@@ -12,8 +12,8 @@ import path from 'path';
 
 const app = express();
 dotenv.config();
-// @ts-ignore
-const PORT = process.env.PORT | 4000;
+
+const PORT = process.env.PORT || 4000;
 
 
 

@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "studentska sluzba",
   "main": "index.ts",
+  "engines" : { 
+    "npm" : "8.5.5",
+    "node" : "16.15.0"
+  },
   "scripts": {
     "start": "nodemon index.ts",
     "typescript": "nodemon index.ts --exec babel-node -e -ts",

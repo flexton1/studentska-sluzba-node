@@ -2,6 +2,10 @@
   "name": "studentska-sluzba",
   "version": "0.1.0",
   "private": true,
+  "engines" : { 
+    "npm" : "8.5.5",
+    "node" : "16.15.0"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.1.2",
     "@testing-library/jest-dom": "^5.16.5",

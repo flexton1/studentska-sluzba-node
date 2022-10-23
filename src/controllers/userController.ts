@@ -69,13 +69,11 @@ export const login = async (req, res) => {
                       httpOnly: true,
                   });
 
-
                   userLogin.last_login_timestamp = Date.now();
                   await userLogin.save();
 
                   res.json({message: 'User logged in!',
                             });
-
 
               }
           });

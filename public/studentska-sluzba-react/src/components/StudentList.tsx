@@ -7,6 +7,7 @@ import CreateNewStudent from './CreateNewStudent/CreateNewStudent';
 import { Toast } from 'primereact/toast';
 import StudentTable from './StudentTable/StudentTable';
 import { InputText } from 'primereact/inputtext';
+// @ts-ignore
 import debounce from 'lodash.debounce';
 
 interface IState {

@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "start": "nodemon index.ts",
-    "typescript": "nodemon index.ts --exec babel-node -e -ts"
+    "typescript": "nodemon index.ts --exec babel-node -e -ts",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Harun J",
   "license": "ISC",

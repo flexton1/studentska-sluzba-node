@@ -47,14 +47,15 @@ app.use(express.static(path.join(__dirname + '/public')));
 routes(app);
 
 // serving static files
-app.use(express.static('public'));
+//app.use(express.static('public'));
+
+app.use(express.static(path.join(__dirname, "public/studentska-sluzba-react/build")));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/studentska-sluzba-react/build', 'index.html'));
+});
 
 
-app.get("/", (req, res): Response=>
-
-    res.send(`Node and express server running on port ${PORT}`)
-
-);
 
 //mongoose connection
 mongoose.Promise = global.Promise;

@@ -60,7 +60,7 @@ app.get('*', (req, res) => {
 //mongoose connection
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI
-    ).then((): void => console.log('connecting'))
+    ).then(() => console.log('connecting'))
     .catch(err => console.log(`error: ${err}`));
 
 mongoose.connection.on('error', err => {
@@ -68,6 +68,6 @@ mongoose.connection.on('error', err => {
 });
 
 
-app.listen(PORT, (): void =>
+app.listen(PORT, () =>
     console.log(`Your server is running on port ${PORT}`)
 );
